@@ -115,7 +115,16 @@
         <summary type="html"><![CDATA[{{ post_summary | strip_html | normalize_whitespace }}]]></summary>
       {% endif %}
 
-      {% assign post_image = post.image.path | default: post.image %}
+      {% assign thumb_key = site.data.thumb_key %}
+      {% capture key_parts %}{{ thumb_key }}{% endcapture %}
+      {% assign key_array = key_parts | split: '.' %}
+      
+      {% assign thumb_value = post %}
+      {% for key in key_array %}
+        {% assign thumb_value = thumb_value[key] %}
+      {% endfor %}
+
+      {% assign post_image =  thumb_value | default: post.image.path %}
       {% if post_image %}
         {% unless post_image contains "://" %}
           {% assign post_image = post_image | absolute_url %}
