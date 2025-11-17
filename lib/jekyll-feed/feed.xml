@@ -124,7 +124,7 @@
         {% assign thumb_value = thumb_value[key] %}
       {% endfor %}
 
-      {% assign post_image =  thumb_value | default: post.image.path %}
+      {% assign post_image =  thumb_value | default: post.image %}
       {% if post_image %}
         {% unless post_image contains "://" %}
           {% assign post_image = post_image | absolute_url %}
