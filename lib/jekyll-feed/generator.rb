@@ -56,7 +56,7 @@ module JekyllFeed
 
     def get_thumb_key
       thumb_path_key = @site.config.fetch('thumb_path_key', "image.path")
-      if thumb_path_key != "image"
+      if thumb_path_key != "image.path"
         Jekyll.logger.info "Jekyll Feed:", "Using custom thumb_path_key = #{thumb_path_key}"
       end
       return thumb_path_key
