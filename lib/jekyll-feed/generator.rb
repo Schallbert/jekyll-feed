@@ -12,9 +12,16 @@ module JekyllFeed
         Jekyll.logger.info "Jekyll Feed:", "Skipping feed generation in development"
         return
       end
-
       site.data['thumb_key'] = get_thumb_key
-      generate_feed_by_collection
+      collections.each do |name, meta|
+        Jekyll.logger.info "Jekyll Feed:", "Generating feed for #{name}"
+        (meta["categories"] + [nil]).each do |category|
+          path = feed_path(:collection => name, :category => category)
+          next if file_exists?(path)
+
+          @site.pages << make_page(path, :collection => name, :category => category)
+        end
+      end
       generate_feed_by_tag if config["tags"] && !@site.tags.empty?
     end
 
@@ -75,18 +82,6 @@ module JekyllFeed
       end
 
       @collections
-    end
-
-    def generate_feed_by_collection
-      collections.each do |name, meta|
-        Jekyll.logger.info "Jekyll Feed:", "Generating feed for #{name}"
-        (meta["categories"] + [nil]).each do |category|
-          path = feed_path(:collection => name, :category => category)
-          next if file_exists?(path)
-
-          @site.pages << make_page(path, :collection => name, :category => category)
-        end
-      end
     end
 
     def generate_feed_by_tag
