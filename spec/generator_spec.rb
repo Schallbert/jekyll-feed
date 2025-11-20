@@ -1,5 +1,6 @@
-require 'jekyll-feed'  # Make sure to require your main module
-require 'jekyll'       # Require Jekyll if needed for context
+# frozen_string_literal: true
+
+require "spec_helper"
 
 RSpec.describe JekyllFeed::Generator do
   let(:config) do
