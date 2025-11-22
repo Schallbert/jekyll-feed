@@ -18,12 +18,12 @@ RSpec.describe JekyllFeed::Generator do
     generator.instance_variable_set(:@site, site)
   end
 
-  describe '#get_thumb_key' do
-    subject { generator.send(:get_thumb_key) }
+  describe '#get_image_key' do
+    subject { generator.send(:get_image_key) }
 
-    context 'when thumb_path_key is not set' do
+    context 'when image_path_key is not set' do
       before do
-        site.config.delete('thumb_path_key')
+        site.config.delete('image_path_key')
       end
 
       it 'returns the default key' do
@@ -31,9 +31,9 @@ RSpec.describe JekyllFeed::Generator do
       end
     end
 
-    context 'when thumb_path_key is custom' do
+    context 'when image_path_key is custom' do
       before do
-        site.config['thumb_path_key'] = "custom.image.path"
+        site.config['image_path_key'] = "custom.image.path"
       end
 
       it 'returns the custom key' do
