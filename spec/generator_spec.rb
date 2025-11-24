@@ -18,16 +18,17 @@ RSpec.describe JekyllFeed::Generator do
     generator.instance_variable_set(:@site, site)
   end
 
-  describe '#get_image_key' do
-    subject { generator.send(:get_image_key) }
+  describe '#check_custom_image_key' do
+    subject { generator.send(:check_custom_image_key) }
 
     context 'when image_path_key is not set' do
       before do
         site.config.delete('image_path_key')
       end
 
-      it 'returns the default key' do
-        expect(subject).to eq('image.path')
+      it 'does not log any entry' do
+        log_output = logger.instance_variable_get(:@logdev).dev.string  # Capture log output
+        expect(log_output).to be_empty  # Check that no log output was generated
       end
     end
 
@@ -36,8 +37,9 @@ RSpec.describe JekyllFeed::Generator do
         site.config['image_path_key'] = "custom.image.path"
       end
 
-      it 'returns the custom key' do
-        expect(subject).to eq('custom.image.path')
+      it 'logs the custom key' do
+        log_output = logger.instance_variable_get(:@logdev).dev.string
+        expect(log_output).to include("custom.image.path")
       end
     end
   end

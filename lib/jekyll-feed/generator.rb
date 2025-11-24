@@ -12,7 +12,7 @@ module JekyllFeed
         Jekyll.logger.info "Jekyll Feed:", "Skipping feed generation in development"
         return
       end
-      site.data['image_key'] = get_image_key
+      check_custom_image_key
       collections.each do |name, meta|
         Jekyll.logger.info "Jekyll Feed:", "Generating feed for #{name}"
         (meta["categories"] + [nil]).each do |category|
@@ -54,12 +54,11 @@ module JekyllFeed
       collections.dig(collection, "path") || "#{prefix}.xml"
     end
 
-    def get_image_key
-      image_path_key = @site.config.fetch('image_path_key', "image.path")
-      if image_path_key != "image.path"
+    def check_custom_image_key
+      image_path_key = @site.config.fetch("image_path_key")
+      if image_path_key
         Jekyll.logger.info "Jekyll Feed:", "Using custom image_path_key = #{image_path_key}"
       end
-      return image_path_key
     end
 
     # Returns a hash representing all collections to be processed and their metadata

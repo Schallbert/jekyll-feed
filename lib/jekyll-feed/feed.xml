@@ -115,7 +115,7 @@
         <summary type="html"><![CDATA[{{ post_summary | strip_html | normalize_whitespace }}]]></summary>
       {% endif %}
 
-      {% assign image_key = site.data.image_key %}
+      {% assign image_key = {{site.image_path_key}} | default: "image.path" %}
       {% assign key_array = image_key | split: '.' %}
       
       {% assign image_value = post %}
