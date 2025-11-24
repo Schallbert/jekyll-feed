@@ -55,7 +55,7 @@ module JekyllFeed
     end
 
     def check_custom_image_key
-      image_path_key = @site.config.fetch("image_path_key")
+      image_path_key = @site.config.fetch("image_path_key", nil)
       if image_path_key
         Jekyll.logger.info "Jekyll Feed:", "Using custom image_path_key = #{image_path_key}"
       end
