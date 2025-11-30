@@ -55,6 +55,9 @@
     </author>
   {% endif %}
 
+  {% assign image_path_key = site.image_path_key | default: "image" %}
+  {% assign image_path_key = image_path_key | default: "image.path" %}
+  {% assign key_array = image_path_key | split: "." %}
   {% if page.tags %}
     {% assign posts = site.tags[page.tags] %}
   {% else %}
@@ -115,15 +118,10 @@
         <summary type="html"><![CDATA[{{ post_summary | strip_html | normalize_whitespace }}]]></summary>
       {% endif %}
 
-      {% assign image_key = site.image_path_key | default: "image.path" %}
-      {% assign key_array = image_key | split: "." %}
-      
-      {% assign image_value = post %}
+      {% assign post_image = post %}
       {% for key in key_array %}
-        {% assign image_value = image_value[key] %}
+        {% assign post_image = post_image[key] %}
       {% endfor %}
-
-      {% assign post_image =  image_value | default: post.image %}
       {% if post_image %}
         {% unless post_image contains "://" %}
           {% assign post_image = post_image | absolute_url %}

@@ -98,7 +98,7 @@ describe(JekyllFeed) do
     expect(contents).not_to match "Liquid is not rendered."
   end
 
-  context "custom image_key" do
+  context "when image_path_key is custom" do
     image_key_tests = [
       { thumbs: 'header.image.path', expected: 'http://example.org/image.png' }, 
       { thumbs: 'thumb.path', expected: 'https://cdn.example.org/absolute.png?h=188&amp;w=250' }, 
@@ -106,8 +106,8 @@ describe(JekyllFeed) do
     ]
 
     image_key_tests.each do |test_case|
-      it "correctly processes image_key: '#{test_case[:thumbs]}'" do
-        site.data["image_key"] = test_case[:thumbs]
+      it "correctly processes image: '#{test_case[:thumbs]}'" do
+        site.data["image_path_key"] = test_case[:thumbs]
 
         # Mock image_key structure
         context.registers[:post] = {
